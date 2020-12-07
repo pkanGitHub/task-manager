@@ -5,7 +5,7 @@ const auth = async (req, res, next) => {
     try {
         // to access incoming headers, use replace to remove beginning portion
         const token = req.header('Authorization').replace('Bearer ', '')
-        const decoded = jwt.verify(token, 'thisismynewcourse')
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
         // (below: it's going to find a user with correct id who has that authentication token still stored)
         // if the user logs out that means this token will be valid.
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
